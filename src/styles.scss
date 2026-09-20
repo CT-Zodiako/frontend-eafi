@@ -1,0 +1,102 @@
+@use '@angular/material' as mat;
+
+:root {
+  --eafi-color-blue: #001082;
+  --eafi-color-yellow: #FFE600;
+  --eafi-color-white: #FFFFFF;
+  --eafi-color-primary: var(--eafi-color-blue);
+  --eafi-color-on-primary: var(--eafi-color-white);
+  --eafi-color-accent: var(--eafi-color-yellow);
+  --eafi-color-on-accent: var(--eafi-color-blue);
+  --eafi-color-surface: var(--eafi-color-white);
+  --eafi-color-text: var(--eafi-color-blue);
+  --eafi-color-border: var(--eafi-color-blue);
+  --eafi-color-focus: var(--eafi-color-blue);
+  --eafi-font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --eafi-font-heading: clamp(2rem, 5vw, 3.5rem);
+  --eafi-space-1: 0.25rem;
+  --eafi-space-2: 0.5rem;
+  --eafi-space-4: 1rem;
+  --eafi-space-6: 1.5rem;
+  --eafi-space-8: 2rem;
+  --eafi-space-12: 3rem;
+  --eafi-page-gutter: clamp(1rem, 4vw, 3rem);
+  --eafi-content-width: 72rem;
+  --eafi-text-width: 60ch;
+  --eafi-form-width: 30rem;
+  --eafi-radius: 0.75rem;
+  --eafi-elevation: none;
+  --eafi-motion-duration: 0ms;
+}
+
+html {
+  min-height: 100%;
+  color-scheme: light;
+
+  // Keep Material 3 typography and density; exact brand roles override its tonal defaults.
+  @include mat.theme((
+    color: (theme-type: light, primary: mat.$blue-palette),
+    typography: (plain-family: system-ui, brand-family: system-ui),
+    density: 0,
+  ));
+
+  // M3 uses secondary/tertiary roles rather than the legacy M2 accent palette.
+  @each $role in (primary, inverse-primary, surface-tint, outline, outline-variant,
+    on-surface, on-surface-variant, on-background, inverse-surface, shadow, scrim,
+    error, on-error-container, on-primary-container, on-primary-fixed,
+    on-primary-fixed-variant, on-secondary, on-secondary-container,
+    on-secondary-fixed, on-secondary-fixed-variant, on-tertiary,
+    on-tertiary-container, on-tertiary-fixed, on-tertiary-fixed-variant) {
+    --mat-sys-#{$role}: var(--eafi-color-blue);
+  }
+
+  @each $role in (secondary, secondary-container, secondary-fixed, secondary-fixed-dim,
+    tertiary, tertiary-container, tertiary-fixed, tertiary-fixed-dim) {
+    --mat-sys-#{$role}: var(--eafi-color-yellow);
+  }
+
+  @include mat.button-overrides((
+    filled-container-color: var(--eafi-color-yellow),
+    filled-label-text-color: var(--eafi-color-blue),
+    filled-disabled-container-color: var(--eafi-color-white),
+    filled-disabled-label-text-color: var(--eafi-color-blue),
+  ));
+
+  @each $role in (on-primary, primary-container, primary-fixed, primary-fixed-dim,
+    background, surface, surface-bright, surface-dim, surface-variant,
+    surface-container-lowest, surface-container-low, surface-container,
+    surface-container-high, surface-container-highest, inverse-on-surface,
+    on-error, error-container) {
+    --mat-sys-#{$role}: var(--eafi-color-white);
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--eafi-color-surface);
+  color: var(--eafi-color-text);
+  font: var(--mat-sys-body-medium);
+  font-family: var(--eafi-font-family);
+}
+
+a {
+  color: inherit;
+  text-underline-offset: var(--eafi-space-1);
+}
+
+:focus-visible {
+  outline: 3px solid var(--eafi-color-focus);
+  outline-offset: var(--eafi-space-1);
+}
+
+::selection {
+  background: var(--eafi-color-accent);
+  color: var(--eafi-color-on-accent);
+}

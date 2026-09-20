@@ -1,0 +1,23 @@
+<a class="skip-link" href="#main-content">Skip to main content</a>
+
+<header class="shell-header">
+  <div class="shell-width">
+    <p class="shell-label">EAFI workspace</p>
+    <nav aria-label="Main navigation">
+      @if (session.authenticated()) {
+        <a routerLink="/home">Home</a>
+        <button mat-flat-button type="button" (click)="logout()">Sign out</button>
+      } @else {
+        <a routerLink="/login">Sign in</a>
+      }
+    </nav>
+  </div>
+</header>
+
+<main id="main-content" class="shell-width shell-main" tabindex="-1">
+  <router-outlet />
+</main>
+
+<footer class="shell-footer">
+  <div class="shell-width">EAFI · Connected and organized.</div>
+</footer>

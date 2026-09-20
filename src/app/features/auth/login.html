@@ -1,0 +1,20 @@
+<section aria-labelledby="login-title">
+  <h1 id="login-title">Sign in to EAFI</h1>
+  <p>Use your assigned account to access your workspace.</p>
+  <form [formGroup]="form" (ngSubmit)="submit()" [attr.aria-busy]="busy()">
+    <mat-form-field appearance="outline">
+      <mat-label>Username</mat-label>
+      <input matInput formControlName="username" autocomplete="username" required [readonly]="busy()">
+      <mat-error>Enter a username that is not blank.</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Password</mat-label>
+      <input matInput type="password" formControlName="password" autocomplete="current-password"
+        required minlength="8" [readonly]="busy()">
+      <mat-error>Use at least 8 characters, not only spaces.</mat-error>
+    </mat-form-field>
+    @if (error()) { <p role="alert">{{ error() }}</p> }
+    <button mat-flat-button type="submit" [disabled]="busy()">{{ busy() ? 'Signing in…' : 'Sign in' }}</button>
+    <p role="status">{{ busy() ? 'Verifying your session…' : '' }}</p>
+  </form>
+</section>
