@@ -1,5 +1,5 @@
 import { Component, DestroyRef, inject, signal } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
+import { apiErrorMessage } from '../../core/auth/api-error';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
@@ -14,7 +14,7 @@ import { AuthSession } from '../../core/auth/auth-session';
   styleUrl: './login.scss',
 })
 export class Login {
-  private readonly session = inject(AuthSession);
+  readonly session = inject(AuthSession);
   private readonly router = inject(Router);
   private readonly destroyRef = inject(DestroyRef);
   readonly busy = signal(false);
@@ -34,11 +34,10 @@ export class Login {
       const authenticated = await this.session.login(this.form.getRawValue());
       if (this.destroyRef.destroyed) return;
       if (authenticated) await this.router.navigateByUrl('/home');
-      else this.error.set('Unable to verify your session. Please sign in again.');
+      else this.error.set(this.session.error() || apiErrorMessage(null, 'session'));
     } catch (error: unknown) {
       if (this.destroyRef.destroyed) return;
-      this.error.set(error instanceof HttpErrorResponse && error.status === 401
-        ? 'Invalid username or password.' : 'Unable to sign in. Check your connection and try again.');
+      this.error.set(apiErrorMessage(error, 'login'));
     } finally {
       this.form.controls.password.reset();
       this.busy.set(false);

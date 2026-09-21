@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { provideRouter, Router } from '@angular/router';
 import { App } from './app';
+import { Navigation } from './layout/navigation';
 import { AuthSession } from './core/auth/auth-session';
 
 describe('App', () => {
@@ -22,7 +23,7 @@ describe('App', () => {
   it('performs local logout and navigates to login', () => {
     const clear = vi.spyOn(TestBed.inject(AuthSession), 'clear');
     const navigate = vi.spyOn(TestBed.inject(Router), 'navigateByUrl').mockResolvedValue(true);
-    TestBed.createComponent(App).componentInstance.logout();
+    TestBed.createComponent(Navigation).componentInstance.logout();
     expect(clear).toHaveBeenCalled();
     expect(navigate).toHaveBeenCalledWith('/login');
   });

@@ -1,20 +1,11 @@
-import { Component, inject } from '@angular/core';
-import { Router, RouterLink, RouterOutlet } from '@angular/router';
-import { MatButtonModule } from '@angular/material/button';
-import { AuthSession } from './core/auth/auth-session';
+import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { Navigation } from './layout/navigation';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterLink, MatButtonModule],
+  imports: [RouterOutlet, Navigation],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
-export class App {
-  readonly session = inject(AuthSession);
-  private readonly router = inject(Router);
-
-  logout(): void {
-    this.session.clear();
-    void this.router.navigateByUrl('/login');
-  }
-}
+export class App {}

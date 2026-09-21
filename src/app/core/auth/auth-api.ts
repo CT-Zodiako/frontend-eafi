@@ -1,11 +1,8 @@
-import { inject, Injectable, InjectionToken } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
+import { API_BASE_URL } from './api-config';
 import { HttpClient } from '@angular/common/http';
 import { timeout } from 'rxjs';
 
-// Override this provider for deployment; never put secrets in frontend configuration.
-export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL', {
-  providedIn: 'root', factory: () => 'http://localhost:3001/api/v1',
-});
 export interface LoginRequest { username: string; password: string; }
 export interface LoginResponse { access_token: string; token_type: 'Bearer'; expires_in: number; }
 export interface CurrentUser {
@@ -15,7 +12,6 @@ export interface CurrentUser {
   createdAt: string;
   updatedAt: string;
 }
-
 @Injectable({ providedIn: 'root' })
 export class AuthApi {
   private readonly http = inject(HttpClient);

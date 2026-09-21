@@ -1,6 +1,7 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { AuthApi, CurrentUser, LoginRequest } from './auth-api';
+import { apiErrorMessage } from './api-error';
 
 @Injectable({ providedIn: 'root' })
 export class AuthSession {
@@ -9,7 +10,13 @@ export class AuthSession {
   private readonly currentUser = signal<CurrentUser | null>(null);
   private generation = 0;
   private pending: Promise<boolean> | null = null;
+  private readonly sessionError = signal('');
+  readonly error = this.sessionError.asReadonly();
   readonly user = this.currentUser.asReadonly();
+
+  reportError(error: unknown): void {
+    this.sessionError.set(apiErrorMessage(error, 'session'));
+  }
   readonly authenticated = computed(() => this.user() !== null);
 
   // Transport boundary only: templates and navigation never consume the token.
@@ -38,8 +45,11 @@ export class AuthSession {
       if (generation !== this.generation) return false;
       this.currentUser.set(user);
       return true;
-    }).catch(() => {
-      if (generation === this.generation) this.clear();
+    }).catch((error: unknown) => {
+      if (generation === this.generation) {
+        this.clear();
+        this.reportError(error);
+      }
       return false;
     }).finally(() => {
       if (generation === this.generation) this.pending = null;
@@ -48,6 +58,7 @@ export class AuthSession {
   }
 
   clear(): void {
+    this.sessionError.set('');
     this.generation++;
     this.pending = null;
     this.token.set(null);

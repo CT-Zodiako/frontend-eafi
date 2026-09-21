@@ -1,3 +1,4 @@
+import { signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { HttpErrorResponse } from '@angular/common/http';
 import { provideRouter, Router } from '@angular/router';
@@ -9,7 +10,7 @@ describe('Login', () => {
   beforeEach(() => {
     login.mockReset();
     TestBed.configureTestingModule({ imports: [Login], providers: [
-      provideRouter([]), { provide: AuthSession, useValue: { login } },
+      provideRouter([]), { provide: AuthSession, useValue: { login, error: signal('') } },
     ] });
   });
 

@@ -3,14 +3,7 @@
 <header class="shell-header">
   <div class="shell-width">
     <p class="shell-label">EAFI workspace</p>
-    <nav aria-label="Main navigation">
-      @if (session.authenticated()) {
-        <a routerLink="/home">Home</a>
-        <button mat-flat-button type="button" (click)="logout()">Sign out</button>
-      } @else {
-        <a routerLink="/login">Sign in</a>
-      }
-    </nav>
+    <app-navigation />
   </div>
 </header>
 

@@ -1,0 +1,20 @@
+import { HttpErrorResponse } from '@angular/common/http';
+import { TimeoutError } from 'rxjs';
+import { apiErrorMessage } from './api-error';
+
+describe('apiErrorMessage', () => {
+  it('distinguishes login rejection from expired sessions', () => {
+    const error = new HttpErrorResponse({ status: 401 });
+    expect(apiErrorMessage(error, 'login')).toBe('Invalid username or password.');
+    expect(apiErrorMessage(error, 'session')).toContain('expired');
+  });
+  it.each([0, 400, 403, 429, 500, 503])('maps status %s without exposing server content', status => {
+    const message = apiErrorMessage(new HttpErrorResponse({ status, error: 'private-server-detail' }), 'session');
+    expect(message.length).toBeGreaterThan(0);
+    expect(message).not.toContain('private-server-detail');
+  });
+  it('maps timeout and unknown failures safely', () => {
+    expect(apiErrorMessage(new TimeoutError(), 'login')).toContain('timed out');
+    expect(apiErrorMessage(new Error('private'), 'session')).not.toContain('private');
+  });
+});

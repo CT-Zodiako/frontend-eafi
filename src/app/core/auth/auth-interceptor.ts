@@ -3,7 +3,7 @@ import { DOCUMENT } from '@angular/common';
 import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { catchError, throwError } from 'rxjs';
-import { API_BASE_URL } from './auth-api';
+import { API_BASE_URL } from './api-config';
 import { AuthSession } from './auth-session';
 
 export const authInterceptor: HttpInterceptorFn = (request, next) => {
@@ -23,6 +23,7 @@ export const authInterceptor: HttpInterceptorFn = (request, next) => {
     if (error instanceof HttpErrorResponse && error.status === 401 &&
         authorization === session.authorizationHeader()) {
       session.clear();
+      if (authorization) session.reportError(error);
       void router.navigateByUrl('/login');
     }
     return throwError(() => error);
