@@ -21,7 +21,7 @@ describe('Login', () => {
     await fixture.componentInstance.submit();
     fixture.detectChanges();
     expect(login).not.toHaveBeenCalled();
-    expect(fixture.nativeElement.textContent).toContain('Enter a username');
+    expect(fixture.nativeElement.textContent).toContain('Ingresá un nombre de usuario');
     expect(fixture.nativeElement.querySelector('input[type="password"]').autocomplete).toBe('current-password');
     expect(fixture.nativeElement.querySelectorAll('mat-label').length).toBe(2);
   });
@@ -32,7 +32,7 @@ describe('Login', () => {
     fixture.componentInstance.form.setValue({ username: 'test-user', password: 'test-password' });
     await fixture.componentInstance.submit();
     fixture.detectChanges();
-    expect(fixture.nativeElement.querySelector('[role="alert"]').textContent).toContain('Invalid username or password');
+    expect(fixture.nativeElement.querySelector('[role="alert"]').textContent).toContain('Usuario o contraseña incorrectos');
     expect(fixture.componentInstance.form.controls.password.value).toBe('');
     expect(fixture.componentInstance.busy()).toBe(false);
   });

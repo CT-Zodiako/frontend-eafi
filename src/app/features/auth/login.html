@@ -1,20 +1,20 @@
 <section aria-labelledby="login-title">
-  <h1 id="login-title">Sign in to EAFI</h1>
-  <p>Use your assigned account to access your workspace.</p>
+  <h1 id="login-title">Iniciar sesión en EAFI</h1>
+  <p>Usá tu cuenta asignada para acceder a tu espacio de trabajo.</p>
   <form [formGroup]="form" (ngSubmit)="submit()" [attr.aria-busy]="busy()">
     <mat-form-field appearance="outline">
-      <mat-label>Username</mat-label>
+      <mat-label>Usuario</mat-label>
       <input matInput formControlName="username" autocomplete="username" required [readonly]="busy()">
-      <mat-error>Enter a username that is not blank.</mat-error>
+      <mat-error>Ingresá un nombre de usuario que no esté en blanco.</mat-error>
     </mat-form-field>
     <mat-form-field appearance="outline">
-      <mat-label>Password</mat-label>
+      <mat-label>Contraseña</mat-label>
       <input matInput type="password" formControlName="password" autocomplete="current-password"
         required minlength="8" [readonly]="busy()">
-      <mat-error>Use at least 8 characters, not only spaces.</mat-error>
+      <mat-error>Usá al menos 8 caracteres, no solo espacios.</mat-error>
     </mat-form-field>
     @if (error() || session.error()) { <p role="alert">{{ error() || session.error() }}</p> }
-    <button mat-flat-button type="submit" [disabled]="busy()">{{ busy() ? 'Signing in…' : 'Sign in' }}</button>
-    <p role="status">{{ busy() ? 'Verifying your session…' : '' }}</p>
+    <button mat-flat-button type="submit" [disabled]="busy()">{{ busy() ? 'Iniciando sesión…' : 'Iniciar sesión' }}</button>
+    <p role="status">{{ busy() ? 'Verificando tu sesión…' : '' }}</p>
   </form>
 </section>

@@ -15,8 +15,8 @@ describe('App', () => {
     const fixture = TestBed.createComponent(App);
     await fixture.whenStable();
     const element = fixture.nativeElement as HTMLElement;
-    expect(element.querySelector('header')?.textContent).toContain('EAFI workspace');
-    expect(element.querySelector('nav')?.textContent).toContain('Sign in');
+    expect(element.querySelector('header')?.textContent).toContain('Espacio de trabajo EAFI');
+    expect(element.querySelector('nav')?.textContent).toContain('Iniciar sesión');
     expect(element.querySelector('main router-outlet')).toBeTruthy();
   });
 

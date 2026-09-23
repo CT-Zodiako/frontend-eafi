@@ -15,19 +15,19 @@ export interface NavigationItem {
   selector: 'app-navigation',
   imports: [RouterLink, MatButtonModule, MatMenuModule],
   template: `
-    <nav aria-label="Main navigation">
+    <nav aria-label="Navegación principal">
       @if (session.user(); as user) {
         <span class="identity">{{ user.username }} · {{ user.role }}</span>
-        <button mat-flat-button [matMenuTriggerFor]="menu" type="button">Menu</button>
+        <button mat-flat-button [matMenuTriggerFor]="menu" type="button">Menú</button>
         <mat-menu #menu="matMenu">
-          <a mat-menu-item routerLink="/home">Home</a>
+          <a mat-menu-item routerLink="/home">Inicio</a>
           @for (item of visibleItems(); track item.path) {
             <a mat-menu-item [routerLink]="item.path">{{ item.label }}</a>
           }
-          <button mat-menu-item type="button" (click)="logout()">Sign out</button>
+          <button mat-menu-item type="button" (click)="logout()">Cerrar sesión</button>
         </mat-menu>
       } @else {
-        <a mat-button routerLink="/login">Sign in</a>
+        <a mat-button routerLink="/login">Iniciar sesión</a>
       }
     </nav>
   `,

@@ -19,7 +19,7 @@ export class AuthSession {
   }
   readonly authenticated = computed(() => this.user() !== null);
 
-  // Transport boundary only: templates and navigation never consume the token.
+
   authorizationHeader(): string | null {
     const token = this.token();
     return token ? `Bearer ${token}` : null;
@@ -30,7 +30,7 @@ export class AuthSession {
     const generation = this.generation;
     const response = await firstValueFrom(this.api.login(credentials));
     if (generation !== this.generation) return false;
-    // Fail closed if persistence is unavailable; do not silently change storage policy.
+
     sessionStorage.setItem('access_token', response.access_token);
     this.token.set(response.access_token);
     return this.hydrate();

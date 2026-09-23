@@ -19,7 +19,6 @@ export const authInterceptor: HttpInterceptorFn = (request, next) => {
   const authenticatedRequest = authorization
     ? request.clone({ setHeaders: { Authorization: authorization } }) : request;
   return next(authenticatedRequest).pipe(catchError((error: unknown) => {
-    // A delayed response from an older session must not invalidate a newer login.
     if (error instanceof HttpErrorResponse && error.status === 401 &&
         authorization === session.authorizationHeader()) {
       session.clear();
