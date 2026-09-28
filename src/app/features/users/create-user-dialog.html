@@ -1,0 +1,28 @@
+<h2 mat-dialog-title>Crear usuario</h2>
+<form [formGroup]="form" (ngSubmit)="submit()" [attr.aria-busy]="busy()">
+  <mat-dialog-content>
+    <mat-form-field appearance="outline">
+      <mat-label>Usuario</mat-label>
+      <input matInput formControlName="username" autocomplete="off" required [readonly]="busy()">
+      <mat-error>Ingresá un nombre de usuario que no esté en blanco.</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Contraseña</mat-label>
+      <input matInput type="password" formControlName="password" autocomplete="new-password"
+        required minlength="8" [readonly]="busy()">
+      <mat-error>Usá al menos 8 caracteres, no solo espacios.</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Rol</mat-label>
+      <mat-select formControlName="role" required [disabled]="busy()">
+        <mat-option value="EVALUATOR">Evaluador</mat-option>
+        <mat-option value="ADMINISTRATOR">Administrador</mat-option>
+      </mat-select>
+    </mat-form-field>
+    @if (error()) { <p role="alert">{{ error() }}</p> }
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button type="button" mat-dialog-close [disabled]="busy()">Cancelar</button>
+    <button mat-flat-button type="submit" [disabled]="busy()">{{ busy() ? 'Creando…' : 'Crear usuario' }}</button>
+  </mat-dialog-actions>
+</form>

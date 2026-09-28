@@ -1,0 +1,33 @@
+<section aria-labelledby="users-title">
+  <div class="users-header">
+    <h1 id="users-title">Usuarios</h1>
+    <button mat-flat-button type="button" (click)="openCreateDialog()">Crear</button>
+  </div>
+
+  @if (error()) { <p role="alert">{{ error() }}</p> }
+
+  @if (loading()) {
+    <p role="status">Cargando usuarios…</p>
+  } @else if (users().length === 0) {
+    <p>No hay usuarios registrados todavía.</p>
+  } @else {
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">Usuario</th>
+          <th scope="col">Rol</th>
+          <th scope="col">Creado</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (user of users(); track user.id) {
+          <tr>
+            <td>{{ user.username }}</td>
+            <td>{{ user.role }}</td>
+            <td>{{ user.createdAt | date: 'short' }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</section>

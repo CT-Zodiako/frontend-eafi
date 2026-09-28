@@ -1,0 +1,12 @@
+:host { display: block; }
+
+mat-dialog-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--eafi-space-4);
+  padding-block-start: var(--eafi-space-2);
+}
+
+mat-form-field { width: 100%; min-width: 20rem; }
+
+[role='alert'] { border-inline-start: var(--eafi-space-1) solid var(--eafi-color-blue); padding-inline: var(--eafi-space-4); }

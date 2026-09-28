@@ -1,15 +1,30 @@
 <a class="skip-link" href="#main-content">Saltar al contenido principal</a>
 
 <header class="shell-header">
-  <div class="shell-width">
+  <div class="shell-header-inner">
+    @if (session.authenticated()) {
+      <button type="button" class="sidebar-toggle" (click)="sidebarOpen.set(!sidebarOpen())"
+        [attr.aria-expanded]="sidebarOpen()" aria-controls="app-sidebar">
+        Menú
+      </button>
+    }
     <p class="shell-label">Espacio de trabajo EAFI</p>
-    <app-navigation />
   </div>
 </header>
 
-<main id="main-content" class="shell-width shell-main" tabindex="-1">
-  <router-outlet />
-</main>
+<div class="shell-body">
+  @if (session.authenticated()) {
+    <app-sidebar [items]="navigationItems" [open]="sidebarOpen()" (navigated)="sidebarOpen.set(false)" />
+    @if (sidebarOpen()) {
+      <button type="button" class="sidebar-backdrop" aria-label="Cerrar menú" (click)="sidebarOpen.set(false)"></button>
+    }
+  }
+  <main id="main-content" class="shell-main" tabindex="-1">
+    <div class="shell-width">
+      <router-outlet />
+    </div>
+  </main>
+</div>
 
 <footer class="shell-footer">
   <div class="shell-width">EAFI · Conectados y organizados.</div>

@@ -1,0 +1,15 @@
+@if (session.user(); as user) {
+  <aside id="app-sidebar" class="sidebar" [class.is-open]="open()" aria-label="Navegación principal">
+    <div class="sidebar-identity">
+      <span class="sidebar-identity-name">{{ user.username }}</span>
+      <span class="sidebar-identity-role">{{ user.role }}</span>
+    </div>
+    <nav>
+      <a routerLink="/home" routerLinkActive="is-active" (click)="navigated.emit()">Inicio</a>
+      @for (item of visibleItems(); track item.path) {
+        <a [routerLink]="item.path" routerLinkActive="is-active" (click)="navigated.emit()">{{ item.label }}</a>
+      }
+    </nav>
+    <button mat-button type="button" class="sidebar-logout" (click)="logout()">Cerrar sesión</button>
+  </aside>
+}

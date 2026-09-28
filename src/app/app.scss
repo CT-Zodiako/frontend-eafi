@@ -15,10 +15,17 @@
 
 .shell-header {
   --eafi-color-focus: var(--eafi-color-yellow);
-  padding-block: var(--eafi-space-6);
+  padding-block: var(--eafi-space-4);
+  padding-inline: var(--eafi-page-gutter);
   background: var(--eafi-color-primary);
   color: var(--eafi-color-on-primary);
   border-bottom: var(--eafi-space-1) solid var(--eafi-color-accent);
+}
+
+.shell-header-inner {
+  display: flex;
+  align-items: center;
+  gap: var(--eafi-space-4);
 }
 
 .shell-label {
@@ -26,31 +33,44 @@
   font-weight: 700;
 }
 
+.sidebar-toggle {
+  display: none;
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: 1px solid var(--eafi-color-on-primary);
+  border-radius: var(--eafi-radius);
+  padding: var(--eafi-space-2) var(--eafi-space-4);
+  cursor: pointer;
+}
+
+.shell-body {
+  flex: 1;
+  display: flex;
+  align-items: stretch;
+  min-height: 0;
+}
+
 .shell-main {
   flex: 1;
+  min-width: 0;
   padding-block: var(--eafi-space-12);
 }
-
-.shell-header .shell-width,
-nav {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--eafi-space-4);
-}
-
-.shell-header .shell-width { justify-content: space-between; }
 
 .shell-footer {
   padding-block: var(--eafi-space-6);
   border-top: 1px solid var(--eafi-color-border);
 }
 
+.sidebar-backdrop {
+  display: none;
+}
+
 .skip-link {
   position: absolute;
   inset-block-start: var(--eafi-space-4);
   inset-inline-start: var(--eafi-space-4);
-  z-index: 1;
+  z-index: 10;
   padding: var(--eafi-space-4);
   background: var(--eafi-color-accent);
   color: var(--eafi-color-on-accent);
@@ -59,4 +79,19 @@ nav {
 
 .skip-link:focus {
   transform: translateY(0);
+}
+
+@media (max-width: 63.9375rem) {
+  .sidebar-toggle { display: inline-flex; }
+
+  .sidebar-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 5;
+    padding: 0;
+    border: none;
+    background: rgb(0 0 0 / 40%);
+    cursor: pointer;
+  }
 }
