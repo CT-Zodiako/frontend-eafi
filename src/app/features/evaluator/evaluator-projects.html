@@ -1,0 +1,26 @@
+<section aria-labelledby="evaluator-projects-title">
+  <div class="evaluator-projects-header">
+    <h1 id="evaluator-projects-title">Mis proyectos</h1>
+  </div>
+
+  @if (loading()) {
+    <p role="status">Cargando proyectos…</p>
+  } @else if (error()) {
+    <div role="alert" class="evaluator-projects-error">
+      <p>{{ error() }}</p>
+      <button mat-flat-button type="button" (click)="load()">Reintentar</button>
+    </div>
+  } @else if (projects().length === 0) {
+    <p>No tenés proyectos asignados todavía.</p>
+  } @else {
+    <ul class="evaluator-projects-grid">
+      @for (project of projects(); track project.id) {
+        <li class="evaluator-project-card">
+          <h2>{{ project.name }}</h2>
+          <p>{{ project.description }}</p>
+          <p class="evaluator-project-meta">Actualizado: {{ project.updatedAt | date: 'short' }}</p>
+        </li>
+      }
+    </ul>
+  }
+</section>

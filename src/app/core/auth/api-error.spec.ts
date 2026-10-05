@@ -17,4 +17,12 @@ describe('apiErrorMessage', () => {
     expect(apiErrorMessage(new TimeoutError(), 'login')).toContain('tardó demasiado');
     expect(apiErrorMessage(new Error('private'), 'session')).not.toContain('private');
   });
+
+  it('maps evaluator-projects errors for generic, network, 401, 403 and timeout cases', () => {
+    expect(apiErrorMessage(new Error('private'), 'evaluator-projects')).toContain('No se pudieron cargar tus proyectos asignados');
+    expect(apiErrorMessage(new HttpErrorResponse({ status: 0 }), 'evaluator-projects')).toContain('No se pudo conectar');
+    expect(apiErrorMessage(new HttpErrorResponse({ status: 401 }), 'evaluator-projects')).toContain('sesión venció');
+    expect(apiErrorMessage(new HttpErrorResponse({ status: 403 }), 'evaluator-projects')).toBe('No tenés permiso para ver estos proyectos.');
+    expect(apiErrorMessage(new TimeoutError(), 'evaluator-projects')).toContain('tardó demasiado');
+  });
 });
