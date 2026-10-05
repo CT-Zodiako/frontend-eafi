@@ -5,6 +5,7 @@ import { AuthSession } from './core/auth/auth-session';
 
 const navigationItems: readonly SidebarItem[] = [
   { label: 'Usuarios', path: '/users', roles: ['ADMINISTRATOR'] },
+  { label: 'Mis proyectos', path: '/evaluator/projects', roles: ['EVALUATOR'] },
 ];
 
 @Component({

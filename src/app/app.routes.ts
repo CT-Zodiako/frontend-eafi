@@ -9,6 +9,10 @@ export const routes: Routes = [
     path: 'users', title: 'Usuarios · EAFI', canActivate: [roleGuard], data: { roles: ['ADMINISTRATOR'] }, // ! RUTA
     loadComponent: () => import('./features/users/users-list').then(m => m.UsersList),
   },
+  {
+    path: 'evaluator/projects', title: 'Mis proyectos · EAFI', canActivate: [roleGuard], data: { roles: ['EVALUATOR'] },
+    loadComponent: () => import('./features/evaluator/evaluator-projects').then(m => m.EvaluatorProjects),
+  },
   { path: '', pathMatch: 'full', redirectTo: 'home' },
   { path: '**', redirectTo: 'home' },
 ];
